@@ -4,6 +4,9 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from app.extensions import db
 from flask_login import login_user,logout_user
 auth_bp=Blueprint('auth',__name__)
+@auth_bp.route('/')
+def index():
+    return redirect(url_for('auth.login'))
 
 @auth_bp.route('/register',methods=["GET","POST"])
 def register():

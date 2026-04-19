@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-3">Manage Companies</h3>
+
+    <form method="GET" action="/admin/company" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Search by company name...">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Company</th>
+                    <th>Email</th>
+                    <th>HR Contact</th>
+                    <th>Website</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ company.company_name }}</td>
+                    <td>{{ company.user.email }}</td>
+                    <td>{{ company.hr_contact }}</td>
+                    <td><a href="{{ company.website }}" target="_blank">{{ company.website }}</a></td>
+                    <td class="text-center">
+                        {% set status = company.approval_status.lower().strip() %}
+                        <span class="badge 
+                            {% if status == 'approved' %} bg-success
+                            {% elif status == 'rejected' %} bg-danger
+                            {% elif status == 'blacklisted' %} bg-dark
+                            {% else %} bg-warning text-dark
+                            {% endif %}">
+                            {{ company.approval_status }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            {% if status == 'pending' %}
+                                <form method="POST" action="/admin/company/{{ company.id }}/approve">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                                <form method="POST" action="/admin/company/{{ company.id }}/reject">
+                                    <button type="submit" class="btn btn-warning btn-sm">Reject</button>
+                                </form>
+                            {% elif status == 'approved' %}
+                                <form method="POST" action="/admin/company/{{ company.id }}/blacklist">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Blacklist this company?')">
+                                        Blacklist
+                                    </button>
+                                </form>
+                            {% elif status == 'blacklisted' %}
+                                    <form method="POST" action="/admin/company/{{ company.id }}/unblacklist">
+                                        <button type="submit" class="btn btn-success btn-sm"
+                                            onclick="return confirm('Unblacklist this company?')">
+                                                    Unblacklist
+                                                            </button>
+                                                    </form>
+                            {% elif status == 'rejected' %}
+                                <form method="POST" action="/admin/company/{{ company.id }}/approve">
+                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                </form>
+                            {% else %}
+                                <span class="text-muted">No actions</span>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+ {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4" style="max-width: 400px; margin: auto;">
+        
+        <h3 class="text-center mb-4">Register</h3>
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <label class="form-label">Select Role</label>
+                <select name="role" class="form-select" required>
+                    <option value="">-- Choose Role --</option>
+
+                    <option value="student"
+                        {% if request.form.get('role') == 'student' %}selected{% endif %}>
+                        Student
+                    </option>
+
+                    <option value="company"
+                        {% if request.form.get('role') == 'company' %}selected{% endif %}>
+                        Company
+                    </option>
+
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mb-2">
+                Continue
+            </button>
+
+        </form>
+
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary w-100">
+            Login
+        </a>
+   
+    </div>
+</div>
+
+{% endblock %}

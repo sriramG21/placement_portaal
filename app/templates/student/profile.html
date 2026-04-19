@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm p-4" style="max-width: 500px; margin:auto;">
+
+        <h3 class="text-center mb-4">Edit Profile</h3>
+
+        <form method="post" action="/student/profile" enctype="multipart/form-data">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" 
+                       value="{{ current_user.name }}" 
+                       class="form-control" required>
+            </div>
+
+            <!-- CGPA -->
+            <div class="mb-3">
+                <label class="form-label">CGPA</label>
+                <input type="number" name="cgpa" 
+                       step="0.01" min="0" max="10"
+                       value="{{ current_user.student.cgpa }}" 
+                       class="form-control" required>
+            </div>
+
+            <!-- Roll No -->
+            <div class="mb-3">
+                <label class="form-label">Roll Number</label>
+                <input type="text" name="roll_no" 
+                       value="{{ current_user.student.roll_no }}" 
+                       class="form-control" required>
+            </div>
+
+            <!-- Resume Upload -->
+            <div class="mb-3">
+                <label class="form-label">Upload Resume (PDF)</label>
+                <input type="file" name="resume" 
+                       class="form-control" accept=".pdf">
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-success w-100">
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

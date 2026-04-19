@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h3 class="mb-3">Available Placement Drives</h3>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                    <th>Description</th>
+                    <th>Eligibility</th>
+                    <th>Deadline</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for drive in drives %}
+                <tr>
+                    <td>{{ drive.company.company_name }}</td>
+                    <td>{{ drive.job_title }}</td>
+                    <td>{{ drive.job_description }}</td>
+                    <td>{{ drive.eligibility_criteria }}</td>
+                    <td>{{ drive.application_deadline.strftime('%d-%m-%Y') }}</td>
+                    <td>
+    {% set already_applied = applications | selectattr('drive_id', 'equalto', drive.id) | list %}
+    {% if already_applied %}
+        <button class="btn btn-secondary btn-sm" disabled>Applied</button>
+    {% else %}
+        <form action="/student/drives/{{ drive.id }}/apply" method="post">
+            <button type="submit" class="btn btn-success btn-sm">Apply</button>
+        </form>
+    {% endif %}
+</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-3">Placement Drives</h3>
+
+    <table class="table table-bordered table-striped table-hover">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Job Title</th>
+                <th>Description</th>
+                <th>Eligibility</th>
+                <th>Company Name</th>
+                <th>Deadline</th>
+                <th>JD</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+<tbody>
+{% for drive in drives %}
+<tr>
+
+    <td>{{ drive.job_title }}</td>
+    <td>{{ drive.job_description }}</td>
+    <td>{{ drive.eligibility_criteria }}</td>
+
+    <td>
+        {{ drive.company.company_name if drive.company else 'N/A' }}
+    </td>
+
+    <td>
+        {{ drive.application_deadline.strftime('%d-%m-%Y') if drive.application_deadline else 'N/A' }}
+    </td>
+    <td class="text-center">
+        {% if drive.jd_pdf %}
+            <a href="{{ url_for('static', filename='uploads/jd_pdf/' + drive.jd_pdf) }}" 
+               target="_blank"
+               class="btn btn-sm btn-info">
+                View
+            </a>
+        {% else %}
+            <span class="text-muted">No JD</span>
+        {% endif %}
+    </td>
+
+    <!-- ✅ STATUS FIX -->
+    <td>
+        {% set status = drive.status.lower().strip() %}
+
+        <span class="badge 
+            {% if status == 'approved' %} bg-success
+            {% elif status == 'rejected' %} bg-danger
+            {% else %} bg-warning text-dark
+            {% endif %}">
+            {{ status }}
+        </span>
+    </td>
+
+    <!-- ✅ ACTIONS FIX -->
+    <td>
+        <div class="d-flex gap-2">
+
+            {% if status == 'approved' %}
+                <form action="/admin/drives/{{ drive.id }}/reject" method="post">
+                    <button class="btn btn-danger btn-sm">Reject</button>
+                </form>
+
+            {% elif status == 'rejected' %}
+                <form action="/admin/drives/{{ drive.id }}/approve" method="post">
+                    <button class="btn btn-success btn-sm">Approve</button>
+                </form>
+
+            {% else %}
+                <form action="/admin/drives/{{ drive.id }}/approve" method="post">
+                    <button class="btn btn-success btn-sm">Approve</button>
+                </form>
+
+                <form action="/admin/drives/{{ drive.id }}/reject" method="post">
+                    <button class="btn btn-danger btn-sm">Reject</button>
+                </form>
+            {% endif %}
+
+        </div>
+    </td>
+
+</tr>
+{% endfor %}
+</tbody>
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4 text-center">Student Dashboard</h2>
+
+
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3">
+                <h5>Name</h5>
+                <p class="mb-0">{{ current_user.name }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3">
+                <h5>Applications</h5>
+                <p class="mb-0">{{ application_count }}</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm p-3">
+
+        <h5 class="mb-3">Quick Actions</h5>
+
+        <div class="d-grid gap-2">
+
+            <a href="/student/drives" class="btn btn-primary">
+                View Drives
+            </a>
+
+            <a href="/student/application" class="btn btn-info">
+                My Applications
+            </a>
+
+            <a href="/student/profile" class="btn btn-warning">
+                Edit Profile
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

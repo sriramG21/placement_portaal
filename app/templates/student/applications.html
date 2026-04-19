@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-3">Applied Placement Drives</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-dark">
+        <tr>
+        <th>Job_Title
+        </th>
+        <th>Company_Name</th>
+        <th>Applied_Date</th>
+        <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+        <tr>
+            <td>{{application.drive.job_title}}</td>
+            <td>{{application.drive.company.company_name}}</td>
+            <td>{{application.application_date}}</td>
+            <td>{{application.status}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}

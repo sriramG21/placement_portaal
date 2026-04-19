@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Students</h5>
+                <h2>{{ students }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5 class="card-title">Companies</h5>
+                <h2>{{ company }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Applications</h5>
+                <h2>{{ application }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Drives</h5>
+                <h2>{{ placement_drives }}</h2>
+            </div>
+        </div>
+    </div>
+</div><div class="row mt-4">
+    <div class="col-md-12">
+        <div class="list-group">
+            <a href="/admin/students" class="list-group-item list-group-item-action">
+                👨‍🎓 Manage Students
+            </a>
+            <a href="/admin/company" class="list-group-item list-group-item-action">
+                🏢 Manage Companies
+            </a>
+            <a href="/admin/drives" class="list-group-item list-group-item-action">
+                📋 Manage Placement Drives
+            </a>
+            <a href="/logout" class="list-group-item list-group-item-action text-danger">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

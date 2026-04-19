@@ -1,4 +1,0 @@
-class Config:
-    SECRET_KEY='YOUR_SECERET_KEY'
-    SQLALCHEMY_DATABASE_URI='sqlite:///placement.db'
-    SQLALCHEMY_TRACK_MODIFICATIONS=False
